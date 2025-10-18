@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Game Hub</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="dashboard">
+    <header class="dashboard-header">
+      <div class="header-content">
+        <div class="user-info">
+          <div class="user-avatar">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="user-details">
+            <h1 id="userDisplay">Welcome back!</h1>
+            <p class="user-subtitle">Ready to explore some amazing games?</p>
+          </div>
+        </div>
+        <button class="logout-btn" onclick="logout()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="16,17 21,12 16,7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="21" y1="12" x2="9" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Logout</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="dashboard-main">
+      <section class="games-section">
+        <div class="section-header">
+          <h2>Popular Games</h2>
+          <p>Click on any game to learn more about it</p>
+        </div>
+
+        <div class="game-list">
+          <div class="game-card" data-game="valorant">
+            <div class="game-icon">🎯</div>
+            <h3>Valorant</h3>
+            <p>Tactical FPS</p>
+          </div>
+          <div class="game-card" data-game="lol">
+            <div class="game-icon">⚔️</div>
+            <h3>League of Legends</h3>
+            <p>MOBA</p>
+          </div>
+          <div class="game-card" data-game="ml">
+            <div class="game-icon">📱</div>
+            <h3>Mobile Legends</h3>
+            <p>Mobile MOBA</p>
+          </div>
+          <div class="game-card" data-game="genshin">
+            <div class="game-icon">🌟</div>
+            <h3>Genshin Impact</h3>
+            <p>Open World RPG</p>
+          </div>
+          <div class="game-card" data-game="fortnite">
+            <div class="game-icon">🏗️</div>
+            <h3>Fortnite</h3>
+            <p>Battle Royale</p>
+          </div>
+          <div class="game-card" data-game="cod">
+            <div class="game-icon">🔫</div>
+            <h3>Call of Duty</h3>
+            <p>First Person Shooter</p>
+          </div>
+          <div class="game-card" data-game="minecraft">
+            <div class="game-icon">🧱</div>
+            <h3>Minecraft</h3>
+            <p>Sandbox</p>
+          </div>
+          <div class="game-card" data-game="pubg">
+            <div class="game-icon">🎮</div>
+            <h3>PUBG</h3>
+            <p>Battle Royale</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="stats-section">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">🎮</div>
+            <div class="stat-content">
+              <h3>8</h3>
+              <p>Games Available</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">⭐</div>
+            <div class="stat-content">
+              <h3>4.8</h3>
+              <p>Average Rating</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">👥</div>
+            <div class="stat-content">
+              <h3>1M+</h3>
+              <p>Active Players</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Game Description Modal -->
+  <div id="gameModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="gameTitle"></h2>
+        <button class="close" onclick="closeModal()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="gameDescription"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Check login
+    const user = localStorage.getItem("loggedInUser");
+    if (!user) {
+      window.location.href = "index.html";
+    } else {
+      document.getElementById("userDisplay").textContent = `Hello, ${user}!`;
+    }
+
+    function logout() {
+      localStorage.removeItem("loggedInUser");
+      window.location.href = "index.html";
+    }
+
+    // Game descriptions
+    const gameDescriptions = {
+      valorant: "Valorant is a 5v5 tactical FPS by Riot Games where precise aim and strategic ability usage are key to victory.",
+      lol: "League of Legends is a multiplayer online battle arena (MOBA) game where players control champions to destroy the enemy Nexus.",
+      ml: "Mobile Legends is a 5v5 MOBA game designed for mobile devices, focusing on teamwork, strategy, and quick matches.",
+      genshin: "Genshin Impact is an open-world action RPG by HoYoverse featuring elemental combat and exploration in the world of Teyvat.",
+      fortnite: "Fortnite is a battle royale game by Epic Games where players build structures and fight to be the last one standing.",
+      cod: "Call of Duty is a first-person shooter series that delivers cinematic warfare experiences across multiple eras and storylines.",
+      minecraft: "Minecraft is a sandbox game that allows players to explore, build, and survive in a blocky, procedurally generated world.",
+      pubg: "PUBG (PlayerUnknown’s Battlegrounds) is a battle royale game where up to 100 players fight for survival on an island."
+    };
+
+    // Handle card clicks
+    const cards = document.querySelectorAll(".game-card");
+    const modal = document.getElementById("gameModal");
+    const title = document.getElementById("gameTitle");
+    const desc = document.getElementById("gameDescription");
+
+    cards.forEach(card => {
+      card.addEventListener("click", () => {
+        const gameKey = card.dataset.game;
+        title.textContent = card.textContent;
+        desc.textContent = gameDescriptions[gameKey] || "No description available.";
+        modal.style.display = "flex";
+      });
+    });
+
+    function closeModal() {
+      modal.style.display = "none";
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    }
+  </script>
+</body>
+</html>
