@@ -12,11 +12,18 @@
     <header class="dashboard-header">
       <div class="header-content">
         <div class="user-info">
-          <div class="user-avatar">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <div class="user-avatar" id="userAvatar" onclick="openProfileModal()">
+            <img id="userProfilePicture" src="" alt="Profile picture" style="display: none;">
+            <svg id="defaultAvatar" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
+            <div class="avatar-edit-overlay">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M18.5 2.5C18.8978 2.10218 19.4374 1.87868 20 1.87868C20.5626 1.87868 21.1022 2.10218 21.5 2.5C21.8978 2.89782 22.1213 3.43739 22.1213 4C22.1213 4.56261 21.8978 5.10218 21.5 5.5L12 15L8 16L9 12L18.5 2.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
           </div>
           <div class="user-details">
             <h1 id="userDisplay">Welcome back!</h1>
@@ -131,18 +138,222 @@
     </div>
   </div>
 
+  <!-- Profile Picture Edit Modal -->
+  <div id="profileModal" class="modal">
+    <div class="modal-content profile-modal">
+      <div class="modal-header">
+        <h2>Edit Profile Picture</h2>
+        <button class="close" onclick="closeProfileModal()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="profile-edit-container">
+          <div class="current-profile">
+            <h3>Current Profile Picture</h3>
+            <div class="current-avatar" id="currentAvatar">
+              <img id="currentProfileImg" src="" alt="Current profile" style="display: none;">
+              <svg id="currentDefaultAvatar" width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+          
+          <div class="file-upload-section">
+            <h3>Upload New Picture</h3>
+            <div class="file-upload-container">
+              <input type="file" id="newProfilePicture" accept="image/*" onchange="previewNewProfilePicture(event)">
+              <label for="newProfilePicture" class="file-upload-label">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M17 8L12 3L7 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M12 3V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span id="newFileUploadText">Choose New Picture</span>
+              </label>
+            </div>
+            
+            <div class="image-preview" id="newImagePreview" style="display: none;">
+              <img id="newPreviewImg" src="" alt="New profile preview">
+              <button type="button" class="remove-image" onclick="removeNewProfilePicture()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          
+          <div class="profile-actions">
+            <button class="save-profile-btn" onclick="saveProfilePicture()">
+              <span>Save Changes</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16L21 8V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M17 21V13H7V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M7 3V8H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <button class="remove-profile-btn" onclick="removeCurrentProfilePicture()">
+              <span>Remove Picture</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 6H5H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // Check login
+    // Check login and load user data
     const user = localStorage.getItem("loggedInUser");
     if (!user) {
-      window.location.href = "index.html";
+      window.location.href = "burat.html";
     } else {
       document.getElementById("userDisplay").textContent = `Hello, ${user}!`;
+      
+      // Load user profile picture
+      loadUserProfilePicture(user);
+    }
+
+    function loadUserProfilePicture(username) {
+      const users = JSON.parse(localStorage.getItem("registeredUsers")) || [];
+      const currentUser = users.find(u => u.username === username);
+      
+      if (currentUser && currentUser.profilePicture) {
+        const profileImg = document.getElementById("userProfilePicture");
+        const defaultAvatar = document.getElementById("defaultAvatar");
+        
+        profileImg.src = currentUser.profilePicture;
+        profileImg.style.display = "block";
+        defaultAvatar.style.display = "none";
+      }
+    }
+
+    // Profile picture modal functions
+    function openProfileModal() {
+      const modal = document.getElementById("profileModal");
+      const currentUser = getCurrentUser();
+      
+      // Load current profile picture in modal
+      if (currentUser && currentUser.profilePicture) {
+        const currentImg = document.getElementById("currentProfileImg");
+        const currentDefault = document.getElementById("currentDefaultAvatar");
+        
+        currentImg.src = currentUser.profilePicture;
+        currentImg.style.display = "block";
+        currentDefault.style.display = "none";
+      } else {
+        const currentImg = document.getElementById("currentProfileImg");
+        const currentDefault = document.getElementById("currentDefaultAvatar");
+        
+        currentImg.style.display = "none";
+        currentDefault.style.display = "block";
+      }
+      
+      modal.style.display = "flex";
+    }
+
+    function closeProfileModal() {
+      const modal = document.getElementById("profileModal");
+      modal.style.display = "none";
+      
+      // Reset new image preview
+      removeNewProfilePicture();
+    }
+
+    function getCurrentUser() {
+      const username = localStorage.getItem("loggedInUser");
+      const users = JSON.parse(localStorage.getItem("registeredUsers")) || [];
+      return users.find(u => u.username === username);
+    }
+
+    function previewNewProfilePicture(event) {
+      const file = event.target.files[0];
+      const preview = document.getElementById("newImagePreview");
+      const previewImg = document.getElementById("newPreviewImg");
+      const fileUploadText = document.getElementById("newFileUploadText");
+      
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          previewImg.src = e.target.result;
+          preview.style.display = "block";
+          fileUploadText.textContent = "Change Picture";
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function removeNewProfilePicture() {
+      const fileInput = document.getElementById("newProfilePicture");
+      const preview = document.getElementById("newImagePreview");
+      const fileUploadText = document.getElementById("newFileUploadText");
+      
+      fileInput.value = "";
+      preview.style.display = "none";
+      fileUploadText.textContent = "Choose New Picture";
+    }
+
+    function saveProfilePicture() {
+      const newPicture = document.getElementById("newProfilePicture").files[0];
+      const users = JSON.parse(localStorage.getItem("registeredUsers")) || [];
+      const username = localStorage.getItem("loggedInUser");
+      const userIndex = users.findIndex(u => u.username === username);
+      
+      if (userIndex !== -1) {
+        if (newPicture) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            users[userIndex].profilePicture = e.target.result;
+            localStorage.setItem("registeredUsers", JSON.stringify(users));
+            
+            // Update dashboard display
+            const profileImg = document.getElementById("userProfilePicture");
+            const defaultAvatar = document.getElementById("defaultAvatar");
+            
+            profileImg.src = e.target.result;
+            profileImg.style.display = "block";
+            defaultAvatar.style.display = "none";
+            
+            closeProfileModal();
+          };
+          reader.readAsDataURL(newPicture);
+        } else {
+          closeProfileModal();
+        }
+      }
+    }
+
+    function removeCurrentProfilePicture() {
+      const users = JSON.parse(localStorage.getItem("registeredUsers")) || [];
+      const username = localStorage.getItem("loggedInUser");
+      const userIndex = users.findIndex(u => u.username === username);
+      
+      if (userIndex !== -1) {
+        users[userIndex].profilePicture = null;
+        localStorage.setItem("registeredUsers", JSON.stringify(users));
+        
+        // Update dashboard display
+        const profileImg = document.getElementById("userProfilePicture");
+        const defaultAvatar = document.getElementById("defaultAvatar");
+        
+        profileImg.style.display = "none";
+        defaultAvatar.style.display = "block";
+        
+        closeProfileModal();
+      }
     }
 
     function logout() {
       localStorage.removeItem("loggedInUser");
-      window.location.href = "index.html";
+      window.location.href = "burat.html";
     }
 
     // Game descriptions
