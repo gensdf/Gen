@@ -89,6 +89,11 @@
             <h3>PUBG</h3>
             <p>Battle Royale</p>
           </div>
+          <div class="game-card" data-game="crossfire">
+            <div class="game-icon">🔫</div>
+            <h3>Crossfire PH</h3>
+            <p>Tactical FPS</p>
+          </div>
         </div>
       </section>
 
@@ -97,7 +102,7 @@
           <div class="stat-card">
             <div class="stat-icon">🎮</div>
             <div class="stat-content">
-              <h3>8</h3>
+              <h3>9</h3>
               <p>Games Available</p>
             </div>
           </div>
@@ -134,6 +139,25 @@
       </div>
       <div class="modal-body">
         <p id="gameDescription"></p>
+        <div class="game-actions" id="gameActions">
+          <button class="launch-btn" id="launchBtn" onclick="launchGame()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 5V13L15 9L8 5Z" fill="currentColor"/>
+            </svg>
+            <span id="launchBtnText">Launch Game</span>
+          </button>
+          <button class="download-btn" id="downloadBtn" onclick="downloadGame()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Download</span>
+          </button>
+        </div>
+        <div class="launch-info" id="launchInfo">
+          <p><strong>Note:</strong> Clicking "Launch Game" will attempt to open the game if it's installed. If the game doesn't launch, please ensure it's installed and try the download link.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -356,16 +380,71 @@
       window.location.href = "burat.html";
     }
 
-    // Game descriptions
+    // Game descriptions and launch options
     const gameDescriptions = {
-      valorant: "Valorant is a 5v5 tactical FPS by Riot Games where precise aim and strategic ability usage are key to victory.",
-      lol: "League of Legends is a multiplayer online battle arena (MOBA) game where players control champions to destroy the enemy Nexus.",
-      ml: "Mobile Legends is a 5v5 MOBA game designed for mobile devices, focusing on teamwork, strategy, and quick matches.",
-      genshin: "Genshin Impact is an open-world action RPG by HoYoverse featuring elemental combat and exploration in the world of Teyvat.",
-      fortnite: "Fortnite is a battle royale game by Epic Games where players build structures and fight to be the last one standing.",
-      cod: "Call of Duty is a first-person shooter series that delivers cinematic warfare experiences across multiple eras and storylines.",
-      minecraft: "Minecraft is a sandbox game that allows players to explore, build, and survive in a blocky, procedurally generated world.",
-      pubg: "PUBG (PlayerUnknown’s Battlegrounds) is a battle royale game where up to 100 players fight for survival on an island."
+      valorant: {
+        description: "Valorant is a 5v5 tactical FPS by Riot Games where precise aim and strategic ability usage are key to victory.",
+        steamId: null,
+        platform: "riot",
+        launchUrl: "https://playvalorant.com/en-us/",
+        downloadUrl: "https://playvalorant.com/en-us/download/"
+      },
+      lol: {
+        description: "League of Legends is a multiplayer online battle arena (MOBA) game where players control champions to destroy the enemy Nexus.",
+        steamId: null,
+        platform: "riot",
+        launchUrl: "https://www.leagueoflegends.com/en-us/",
+        downloadUrl: "https://www.leagueoflegends.com/en-us/download/"
+      },
+      ml: {
+        description: "Mobile Legends is a 5v5 MOBA game designed for mobile devices, focusing on teamwork, strategy, and quick matches.",
+        steamId: null,
+        platform: "mobile",
+        launchUrl: "https://m.mobilelegends.com/",
+        downloadUrl: "https://m.mobilelegends.com/en/download"
+      },
+      genshin: {
+        description: "Genshin Impact is an open-world action RPG by HoYoverse featuring elemental combat and exploration in the world of Teyvat.",
+        steamId: "1515950",
+        platform: "steam",
+        launchUrl: "steam://run/1515950",
+        downloadUrl: "https://genshin.hoyoverse.com/en/download"
+      },
+      fortnite: {
+        description: "Fortnite is a battle royale game by Epic Games where players build structures and fight to be the last one standing.",
+        steamId: null,
+        platform: "epic",
+        launchUrl: "https://www.fortnite.com/",
+        downloadUrl: "https://www.epicgames.com/fortnite/en-US/download"
+      },
+      cod: {
+        description: "Call of Duty is a first-person shooter series that delivers cinematic warfare experiences across multiple eras and storylines.",
+        steamId: "1938090",
+        platform: "steam",
+        launchUrl: "steam://run/1938090",
+        downloadUrl: "https://www.callofduty.com/warzone"
+      },
+      minecraft: {
+        description: "Minecraft is a sandbox game that allows players to explore, build, and survive in a blocky, procedurally generated world.",
+        steamId: null,
+        platform: "mojang",
+        launchUrl: "https://www.minecraft.net/en-us",
+        downloadUrl: "https://www.minecraft.net/en-us/get-minecraft"
+      },
+      pubg: {
+        description: "PUBG (PlayerUnknown's Battlegrounds) is a battle royale game where up to 100 players fight for survival on an island.",
+        steamId: "578080",
+        platform: "steam",
+        launchUrl: "steam://run/578080",
+        downloadUrl: "https://store.steampowered.com/app/578080/PUBG_BATTLEGROUNDS/"
+      },
+      crossfire: {
+        description: "Crossfire PH is a tactical first-person shooter game by GameClub featuring intense team-based combat and competitive gameplay.",
+        steamId: null,
+        platform: "gameclub",
+        launchUrl: "https://www.crossfireph.com/",
+        downloadUrl: "https://www.crossfireph.com/download"
+      }
     };
 
     // Handle card clicks
@@ -373,24 +452,84 @@
     const modal = document.getElementById("gameModal");
     const title = document.getElementById("gameTitle");
     const desc = document.getElementById("gameDescription");
+    let currentGame = null;
 
     cards.forEach(card => {
       card.addEventListener("click", () => {
         const gameKey = card.dataset.game;
-        title.textContent = card.textContent;
-        desc.textContent = gameDescriptions[gameKey] || "No description available.";
+        currentGame = gameKey;
+        const gameData = gameDescriptions[gameKey];
+        
+        const gameTitle = card.querySelector('h3');
+        title.textContent = gameTitle ? gameTitle.textContent : "Game";
+        desc.textContent = gameData ? gameData.description : "No description available.";
+        
+        // Update launch button text based on platform
+        const launchBtnText = document.getElementById("launchBtnText");
+        if (gameData && gameData.steamId) {
+          launchBtnText.textContent = "Launch via Steam";
+        } else if (gameData && gameData.platform === "riot") {
+          launchBtnText.textContent = "Open Riot Client";
+        } else if (gameData && gameData.platform === "gameclub") {
+          launchBtnText.textContent = "Open GameClub";
+        } else {
+          launchBtnText.textContent = "Launch Game";
+        }
+        
         modal.style.display = "flex";
       });
     });
 
     function closeModal() {
       modal.style.display = "none";
+      currentGame = null;
+    }
+
+    // Game launch functions
+    function launchGame() {
+      if (!currentGame) return;
+      
+      const gameData = gameDescriptions[currentGame];
+      if (!gameData) return;
+      
+      try {
+        if (gameData.steamId) {
+          // Try Steam protocol for Steam games
+          window.location.href = gameData.launchUrl;
+          setTimeout(() => {
+            // Fallback to website if Steam doesn't launch
+            window.open(gameData.downloadUrl, '_blank');
+          }, 2000);
+        } else if (gameData.platform === "riot") {
+          // For Riot games, open the official website
+          window.open(gameData.launchUrl, '_blank');
+        } else if (gameData.platform === "gameclub") {
+          // For GameClub games, open the official website
+          window.open(gameData.launchUrl, '_blank');
+        } else {
+          // For other games, try the launch URL or fallback to download
+          window.location.href = gameData.launchUrl;
+        }
+      } catch (error) {
+        console.log("Launch failed, opening download page");
+        window.open(gameData.downloadUrl, '_blank');
+      }
+    }
+
+    function downloadGame() {
+      if (!currentGame) return;
+      
+      const gameData = gameDescriptions[currentGame];
+      if (!gameData) return;
+      
+      window.open(gameData.downloadUrl, '_blank');
     }
 
     // Close modal when clicking outside
     window.onclick = function(event) {
       if (event.target === modal) {
         modal.style.display = "none";
+        currentGame = null;
       }
     }
   </script>

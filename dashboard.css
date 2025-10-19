@@ -391,7 +391,74 @@ body {
   color: #374151;
   font-size: 16px;
   line-height: 1.6;
+  margin: 0 0 24px 0;
+}
+
+/* Game action buttons */
+.game-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin: 24px 0;
+}
+
+.launch-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  max-width: 200px;
+}
+
+.launch-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+}
+
+.download-btn {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  max-width: 200px;
+}
+
+.download-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+}
+
+.launch-info {
+  background: #f0f4ff;
+  border: 1px solid #e0e7ff;
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 16px;
+}
+
+.launch-info p {
+  color: #4f46e5;
+  font-size: 14px;
   margin: 0;
+  text-align: center;
 }
 
 /* Profile edit modal */
